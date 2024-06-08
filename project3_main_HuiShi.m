@@ -24,8 +24,8 @@ EF = 6.3;
 CA = 2.3; % Distance AC
 AG = 6.3; % Distance AG
 theta = deg2rad(180);   % Generalized coordinate (g.c.) [rad]
-dtheta = 20;             % [rad/s]
-ddtheta = 20;            % [rad/s^2]
+dtheta = -20;             % [rad/s]
+ddtheta = 0;            % [rad/s^2]
 
 % Definition of known and unknown position-difference vectors
 z1 = AB;               
@@ -171,21 +171,21 @@ ddz1 = 0;
 ddz2 = 0;
 ddz3 = 0;
 ddz4 = 0;
-ddphi1 = ddtheta;
+ddphi1 = 0; % velocity is constant, accel is 0
 % ddphi2 unknown
 % ddphi3 unknown
 ddphi4 = 0;
 % -z1*sin(phi1)*dphi1-z2*sin(phi2)*dphi2-z3*sin(phi3)*dphi3 = 0
 % z1*cos(phi1)*dphi1+z2*cos(phi2)*dphi2+z3*cos(phi3)*dphi3 = 0
-% -z1*sin(phi1)*ddphi1-z1*cos(phi1)*dphi1^2 -z2*sin(phi2)*ddphi2-z2*cos(phi2)*dphi2^2 -z3*sin(phi3)*ddphi3-z3*cos(phi3)*dphi3^2 = 0
-% z1*cos(phi1)*ddphi1-z1*sin(phi1)*dphi1^2 +z2*cos(phi2)*ddphi2-z2*sin(phi2)*dphi2^2 +z3*cos(phi3)*ddphi3-z3*sin(phi3)*dphi3^2 = 0
+% -z1*cos(phi1)*dphi1^2 -z2*sin(phi2)*ddphi2-z2*cos(phi2)*dphi2^2 -z3*sin(phi3)*ddphi3-z3*cos(phi3)*dphi3^2 = 0
+% -z1*sin(phi1)*dphi1^2 +z2*cos(phi2)*ddphi2-z2*sin(phi2)*dphi2^2 +z3*cos(phi3)*ddphi3-z3*sin(phi3)*dphi3^2 = 0
 % ddphi2 , ddphi3 unknown
 K1 = [-z2*sin(phi2) -z3*sin(phi3);
       z2*cos(phi2) z3*cos(phi3)];
 % ddx1 = [ddphi2;
 %     ddphi3];
-W1 = [-z1*sin(phi1)*ddphi1-z1*cos(phi1)*dphi1^2-z2*cos(phi2)*dphi2^2-z3*cos(phi3)*dphi3^2;
-      z1*cos(phi1)*ddphi1-z1*sin(phi1)*dphi1^2-z2*sin(phi2)*dphi2^2-z3*sin(phi3)*dphi3^2];
+W1 = [-z1*cos(phi1)*dphi1^2-z2*cos(phi2)*dphi2^2-z3*cos(phi3)*dphi3^2;
+      -z1*sin(phi1)*dphi1^2-z2*sin(phi2)*dphi2^2-z3*sin(phi3)*dphi3^2];
 
 ddx1 = -inv(K1)*W1;
 ddphi2 = ddx1(1,1);
@@ -229,7 +229,7 @@ disp(ddphi7);
 %[ dxF - dxG; dyF - dyG] = [0;-dz6]
 dxG = 0;
 dyG = 0;
-dxF = dxG % dxF = dxG = 0
+dxF = dxG; % dxF = dxG = 0
 dyF = dyG -dz6;
 disp('velocity of the slider in F: ');
 disp('dxF: ');
@@ -272,3 +272,4 @@ Kz6_phi1 = Kz6_phi8*Kphi3_phi1;
 disp('first-order kinematic coefficient which relates the velocity of the slider in F and the velocity of the crank AB: ');
 disp('Kz6_phi1: ');
 disp(Kz6_phi1);
+a = dyF/dphi1
