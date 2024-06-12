@@ -56,12 +56,12 @@ phi6 = pi*(3/2);
 % z1*sin(phi1)+z2*sin(phi2)+z3*sin(phi3)+z4*sin(phi4) = 0
 % phi2, phi3 = unknown
 
-% z9 is vector between BC
+% z9 is vector between CB
 xB = -1.6;
 yB = 0;
 xC = 0;
 yC = -2.3;
-z9 = sqrt((xB-xC)^2+(yB-yC)^2);
+z9 = sqrt((xC-xB)^2+(yC-yB)^2);
 % z4^2 = z1^2+z9^2-2*z1*z9*cos(gamma19)
 gamma19 = acos((z1^2+z9^2-z4^2)/(2*z1*z9));
 disp('gamma19: ');
@@ -84,8 +84,6 @@ disp(gamma39);
 phi3 = 2*pi-(pi/2-gamma49-gamma39);
 disp('phi3: ');
 disp(phi3);
-% z10 is vector between CB
-% z10 = sqrt((xC-xB)^2+(yC-yB)^2)
 
 % solution of the second loop closure euqation
 % z5*cos(phi5)+z6*cos(phi6)+z7*cos(phi7)+z8*cos(phi8)+z4*cos(phi4) = 0
@@ -272,4 +270,6 @@ Kz6_phi1 = Kz6_phi8*Kphi3_phi1;
 disp('first-order kinematic coefficient which relates the velocity of the slider in F and the velocity of the crank AB: ');
 disp('Kz6_phi1: ');
 disp(Kz6_phi1);
-a = dyF/dphi1
+KyF_phi1 = dyF/dphi1;
+disp('KyF_phi1: ');
+disp(KyF_phi1);
